@@ -14,8 +14,8 @@ class Router {
   }
 
   public function match($route, $method = 'GET') {
-    $controllerDir = dirname(dirname(__FILE__)) . "/App/Controllers/";
-    $errorsDir = dirname(dirname(__FILE__)) . "/App/Views/errors/";
+    $controllerDir = CONTROLLERS_PATH . "/";
+    $errorsDir = VIEWS_PATH . "/errors/";
 
     foreach ($this->routes[$method] as $routeRegex => $controllerAction) {
       $matches = [];
@@ -87,10 +87,20 @@ class Router {
   }
 
   private function routeParams($matches){
-    return array_values(array_filter($matches, function($match, $key){
-      if (is_string($key)) {
-          return true;
+    $params = array_values(array_filter($matches, function($match, $key){
+        if (is_string($key)) {
+            return true;
+        }
+      }, ARRAY_FILTER_USE_BOTH));
+    
+    $params = array_map(function($param){
+      if (is_numeric($param)) {
+        return intval($param);
       }
-    }, ARRAY_FILTER_USE_BOTH));
+
+      return $param;
+    }, $params);
+    return 0;
   }
+
 }

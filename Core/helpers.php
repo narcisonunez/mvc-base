@@ -2,7 +2,7 @@
 
 function config($name, $default = null) 
 {
-  $config = require ROOT_PATH . "/App/config.php";
+  $config = require APP_PATH . "/config.php";
   if (key_exists($name, $config)) {
     return $config[$name];
   }
@@ -12,7 +12,7 @@ function config($name, $default = null)
 function view($name, $data = [])
 {
   $name = str_replace(".", "/", $name);
-  $view = ROOT_PATH . "/App/Views/$name.php";
+  $view = VIEWS_PATH . "/$name.php";
 
   if (!file_exists($view)) {
     echo 'View doesn\'t exists.';
