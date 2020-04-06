@@ -81,6 +81,7 @@ class Router {
   }
 
   private function parseRouteRegex($route) {
+    $route = trim($route, "/");
     $route = preg_replace('/\//', '\\/', $route);
     return preg_replace('/\{([a-z]+)\}/', '(?P<\1>\w+)', $route);
   }
