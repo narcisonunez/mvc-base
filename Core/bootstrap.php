@@ -1,7 +1,9 @@
 <?php
+define("ROOT_PATH", dirname(dirname(__FILE__)));
 
-require dirname(dirname(__FILE__)) . "/Core/Router.php";
+require ROOT_PATH . '/vendor/autoload.php';
+
+require ROOT_PATH . "/Core/Router.php";
 $router = new Core\Router;
 
-require dirname(dirname(__FILE__)) . "/resources/routes/web.php";
-require dirname(dirname(__FILE__)) . "/resources/routes/api.php";
+require ROOT_PATH . "/resources/routes/web.php";

@@ -31,7 +31,7 @@ class Router {
         }
     
         require $controller;
-        $controller = "App\\Controller\\" . $controllerAction['controller'];
+        $controller = "App\\Controllers\\" . $controllerAction['controller'];
         
         $controller = new $controller;
         $action = $controllerAction['action'];

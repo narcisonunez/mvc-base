@@ -6,8 +6,7 @@
   <title>Home</title>
 </head>
 <body>
-  Real
-
+  Home Page
   <form action="/posts" method="POST">
     <button type="submit">Send</button>
   </form>
