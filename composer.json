@@ -1,0 +1,13 @@
+{
+    "name": "narcisonunez/mvc-base",
+    "description": "MVC Framework",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Narciso Nunez",
+            "email": "narciso.arias21@gmail.com"
+        }
+    ],
+    "require": {}
+}
