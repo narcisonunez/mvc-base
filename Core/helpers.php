@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Get a configuration value
+ * 
+ * @param string $name
+ * @param mixed $default
+ */
 function config($name, $default = null) 
 {
   $config = require APP_PATH . "/config.php";
@@ -9,6 +15,12 @@ function config($name, $default = null)
   return $default; 
 }
 
+/**
+ * Load a view file with the data
+ * 
+ * @param string $name
+ * @param array $data
+ */
 function view($name, $data = [])
 {
   $name = str_replace(".", "/", $name);
@@ -24,7 +36,13 @@ function view($name, $data = [])
   return require $view;
 }
 
-function env_value($key, $default = null)
+/**
+ * Get a value from the variables in .env file
+ * 
+ * @param string $key
+ * @param string $default
+ */
+function env_value($key, $default = '')
 {
   global $globalEnvironmentValues;
   
@@ -35,6 +53,11 @@ function env_value($key, $default = null)
   return $default;
 }
 
+/**
+ * Redirect to an specific path
+ * 
+ * @param string $path
+ */
 function redirect($path)
 {
   if (!headers_sent()) {

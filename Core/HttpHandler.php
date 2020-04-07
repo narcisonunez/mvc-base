@@ -2,6 +2,12 @@
 namespace Core;
 
 class HttpHandler {
+
+  /**
+   * Resolve the current request and execute the corresponding actions
+   * 
+   * @param Core\Request $request
+   */
   public function execute(Request $request)
   {
     $params = $request->routeParams;
@@ -37,6 +43,13 @@ class HttpHandler {
     return;
   }
 
+  /**
+   * Execute the action filters in an specific controller
+   * 
+   * @param App\Controllers\Controller $controller
+   * @param array $filters
+   * @param array $params
+   */
   private function applyFilters($controller, $filters, $params)
   {
     foreach($filters as $filterName) {

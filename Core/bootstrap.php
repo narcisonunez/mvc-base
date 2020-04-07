@@ -10,6 +10,9 @@ spl_autoload_register(function ($class) {
   require ROOT_PATH . "/" . str_replace('\\', "/", $class) . ".php";
 });
 
+/**
+ * Register all the keys in the .env file as global to be accesible
+ */
 $GLOBALS["globalEnvironmentValues"] = [];
 $fhandler = fopen(ROOT_PATH . "/.env", 'r') or die("Missing .env file");
 while(!feof($fhandler)) {
