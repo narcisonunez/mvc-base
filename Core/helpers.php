@@ -35,6 +35,13 @@ function env_value($key, $default = null)
   return $default;
 }
 
+function redirect($path)
+{
+  if (!headers_sent()) {
+    return header('Location: ' . $path);
+  }
+}
+
 function dd(...$data)
 {
   if (is_array($data[0])) {
