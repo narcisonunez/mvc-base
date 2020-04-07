@@ -11,4 +11,4 @@ $router->get('', 'HomeController@index');
 
 // $router->get('/home', ['controller' => 'HomeController', 'action' => 'index']);
 
-// $router->post('posts', 'HomeController@store');
+$router->patch('posts', 'HomeController@store');

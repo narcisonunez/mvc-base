@@ -58,3 +58,8 @@ function dd(...$data)
   
   die();
 }
+
+function form_method($method)
+{
+  echo '<input type="hidden" name="_method" value="'. $method .'">';
+}

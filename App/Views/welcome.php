@@ -53,6 +53,10 @@
                 <div class="title m-b-md">
                     Welcome
                 </div>
+                <form action="posts" method="post">
+                    <?php form_method("PATCH"); ?>
+                    <button type="submit">Submit</button>
+                </form>
             </div>
         </div>
     </body>

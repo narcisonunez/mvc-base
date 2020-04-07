@@ -46,8 +46,8 @@ class Router {
     return $this;
   }
 
-  public function path($route, $routeHandler) {
-    $this->add('PATH', $route, $routeHandler);
+  public function patch($route, $routeHandler) {
+    $this->add('PATCH', $route, $routeHandler);
     return $this;
   }
 
