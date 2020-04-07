@@ -1,7 +1,7 @@
 <?php
 // Register all your routes using the $router instance
 
-$router->get('posts/{id}/edit', 'HomeController@index');
+$router->get('', 'HomeController@index');
 
 // $router->get('posts/{id}/edit', 'HomeController@index')
 //       ->withActionFilters([

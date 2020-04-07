@@ -2,8 +2,6 @@
 namespace App\Controllers;
 
 class HomeController extends Controller {
-  
-  private $message;
 
   public function index()
   {

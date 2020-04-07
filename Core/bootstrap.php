@@ -6,6 +6,10 @@ define("CONTROLLERS_PATH", dirname(dirname(__FILE__)) . "/app/Controllers");
 define("MODELS_PATH", dirname(dirname(__FILE__)) . "/app/Models");
 define("VIEWS_PATH", dirname(dirname(__FILE__)) . "/app/Views");
 
+spl_autoload_register(function ($class) {
+  require ROOT_PATH . "/" . str_replace('\\', "/", $class) . ".php";
+});
+
 $GLOBALS["globalEnvironmentValues"] = [];
 $fhandler = fopen(ROOT_PATH . "/.env", 'r') or die("Missing .env file");
 while(!feof($fhandler)) {
@@ -16,7 +20,7 @@ fclose($fhandler);
 unset($fhandler);
 
 require ROOT_PATH . '/vendor/autoload.php';
-require CORE_PATH . "/Router.php";
-$router = new Core\Router;
+
+$router = new Core\Router(new Core\HttpHandler());
 
 require ROOT_PATH . "/resources/routes/web.php";

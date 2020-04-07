@@ -35,7 +35,19 @@ function env_value($key, $default = null)
   return $default;
 }
 
-function dd($data)
+function dd(...$data)
 {
-  die(var_dump($data));
+  if (is_array($data[0])) {
+    $data = $data[0];
+  }
+
+  foreach($data as $key => $info) {
+    if (is_string($key)) {
+      echo "<h3>$key</h3>\n";
+    }
+    var_dump($info);
+    echo "\n\n";
+  }
+  
+  die();
 }

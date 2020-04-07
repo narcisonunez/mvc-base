@@ -10,51 +10,30 @@ class Router {
     "DELETE" => []
   ];
 
+  private $httpHandler;
+
   private $lastRoute;
   private $lastMethod;
 
-  public function resolve() {
-    $method = isset($_POST['_method']) ? $_POST['_method'] : $_SERVER['REQUEST_METHOD'];
-    return $this->match(trim($_SERVER["REQUEST_URI"], "/"), );
+  public function __construct($httpHandler)
+  {
+    $this->httpHandler = $httpHandler;
+  }
+
+  public function resolve($route, $method) {
+    if ($request = $this->match($route, $method)) {
+      return $this->httpHandler->execute($request);
+    }
+    return require VIEWS_PATH . "/errors/404.php"; 
   }
 
   public function match($route, $method = 'GET') {
     foreach ($this->routes[$method] as $routeRegex => $routeHandler) {
       $matches = [];
-
       if (preg_match("/^$routeRegex$/i", $route, $matches)) {
-        $params = $this->routeParams($matches);
-        
-        $controller = "App\\Controllers\\" . $routeHandler['controller'];
-
-        if (!class_exists($controller)) {
-          echo "Controller <strong>". $routeHandler['controller'] ."</strong> doesn't exists.";
-          return;
-        }
-        
-        $controller = new $controller;
-        $action = $routeHandler['action'];
-        $actionFilters = isset($routeHandler['actionFilters']) ? $routeHandler['actionFilters'] : [];
-
-        if (method_exists($controller, $action)) {
-          if (isset($actionFilters["before"])) {
-            $this->applyFilters($controller, $actionFilters["before"], $params);
-          }
-          
-          $viewHTML = $controller->{$action}(...$params);
-          
-          if (isset($actionFilters["after"])) {
-            $this->applyFilters($controller, $actionFilters["after"], $params);
-          }
-
-          return $viewHTML;
-        }
-    
-        echo "Action <strong>$action</strong> doesn't exists.";
-        return;
+        return new Request($routeHandler, $this->routeParams($matches));
       }
     }
-    return require VIEWS_PATH . "/errors/404.php";    
   }
 
   public function get($route, $routeHandler) {
@@ -86,20 +65,6 @@ class Router {
     $this->routes[$this->lastMethod][$this->lastRoute]["actionFilters"] = $filters;
   }
 
-  private function applyFilters($controller, $filters, $params)
-  {
-    foreach($filters as $filterName) {
-      try { 
-        $reflector = new \ReflectionObject($controller);
-        $filterName = $reflector->getMethod($filterName);
-        $filterName->setAccessible(true);
-        $filterName->invokeArgs($controller, $params);
-      } catch(\Exception $e) {
-        throw new \Exception("Action filter: " . $filterName . " is not implemented.");
-      }
-    }
-  }
-
   private function add($method, $route, $routeHandler)
   {
     $regex = $this->parseRouteRegex($route);
@@ -109,7 +74,8 @@ class Router {
     $this->lastMethod = $method;
   }
 
-  private function getRouteHandler($routeHandler) {
+  private function getRouteHandler($routeHandler) 
+  {
     if (is_string($routeHandler)) {
       $actions = [];
       [$controller, $action] = explode("@", $routeHandler);
@@ -121,13 +87,15 @@ class Router {
     return $routeHandler;
   }
 
-  private function parseRouteRegex($route) {
+  private function parseRouteRegex($route) 
+  {
     $route = trim($route, "/");
     $route = preg_replace('/\//', '\\/', $route);
     return preg_replace('/\{([a-z]+)\}/', '(?P<\1>\w+)', $route);
   }
 
-  private function routeParams($matches){
+  private function routeParams($matches)
+  {
     $params = array_values(array_filter($matches, function($match, $key){
         if (is_string($key)) {
             return true;

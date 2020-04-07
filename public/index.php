@@ -2,4 +2,5 @@
 
 require dirname(dirname(__FILE__)) . "/core/bootstrap.php";
 
-$router->match(trim($_SERVER["REQUEST_URI"], "/"), $_SERVER['REQUEST_METHOD']);
+$method = isset($_POST['_method']) ? $_POST['_method'] : $_SERVER['REQUEST_METHOD'];
+$router->resolve(trim($_SERVER["REQUEST_URI"], "/"), $method);
