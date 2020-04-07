@@ -10,5 +10,3 @@ $router->get('', 'HomeController@index');
 //       ]);
 
 // $router->get('/home', ['controller' => 'HomeController', 'action' => 'index']);
-
-$router->patch('posts', 'HomeController@store');
