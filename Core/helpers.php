@@ -6,13 +6,13 @@
  * @param string $name
  * @param mixed $default
  */
-function config($name, $default = null) 
+function config($name, $default = null)
 {
-  $config = require APP_PATH . "/config.php";
-  if (key_exists($name, $config)) {
-    return $config[$name];
-  }
-  return $default; 
+	$config = require APP_PATH . "/config.php";
+	if (key_exists($name, $config)) {
+		return $config[$name];
+	}
+	return $default;
 }
 
 /**
@@ -23,17 +23,17 @@ function config($name, $default = null)
  */
 function view($name, $data = [])
 {
-  $name = str_replace(".", "/", $name);
-  $view = VIEWS_PATH . "/$name.php";
+	$name = str_replace(".", "/", $name);
+	$view = VIEWS_PATH . "/$name.php";
 
-  if (!file_exists($view)) {
-    echo 'View doesn\'t exists.';
-    return;
-  }
+	if (!file_exists($view)) {
+		echo 'View doesn\'t exists.';
+		return;
+	}
 
-  extract($data);
-  unset($data);
-  return require $view;
+	extract($data);
+	unset($data);
+	return require $view;
 }
 
 /**
@@ -44,13 +44,13 @@ function view($name, $data = [])
  */
 function env_value($key, $default = '')
 {
-  global $globalEnvironmentValues;
-  
-  if (key_exists($key, $globalEnvironmentValues)) {
-    return $globalEnvironmentValues[$key];
-  }
+	global $globalEnvironmentValues;
 
-  return $default;
+	if (key_exists($key, $globalEnvironmentValues)) {
+		return $globalEnvironmentValues[$key];
+	}
+
+	return $default;
 }
 
 /**
@@ -60,29 +60,40 @@ function env_value($key, $default = '')
  */
 function redirect($path)
 {
-  if (!headers_sent()) {
-    return header('Location: ' . $path);
-  }
+	if (!headers_sent()) {
+		return header('Location: ' . $path);
+	}
 }
 
+/**
+ * Debug and Die
+ * 
+ * @param array $data
+ */
 function dd(...$data)
 {
-  if (is_array($data[0])) {
-    $data = $data[0];
-  }
+	if (is_array($data[0])) {
+		$data = $data[0];
+	}
 
-  foreach($data as $key => $info) {
-    if (is_string($key)) {
-      echo "<h3>$key</h3>\n";
-    }
-    var_dump($info);
-    echo "\n\n";
-  }
-  
-  die();
+	foreach ($data as $key => $info) {
+		if (is_string($key)) {
+			echo "<h3>$key</h3>\n";
+		}
+		var_dump($info);
+		echo "\n\n";
+	}
+
+	die();
 }
 
+/**
+ * echo out the _method hidden input field used in form 
+ * to fake request method different than get or post
+ * 
+ * @param string $method
+ */
 function form_method($method)
 {
-  echo '<input type="hidden" name="_method" value="'. $method .'">';
+	echo '<input type="hidden" name="_method" value="' . $method . '">';
 }

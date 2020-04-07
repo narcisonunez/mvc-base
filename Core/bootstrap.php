@@ -7,7 +7,7 @@ define("MODELS_PATH", dirname(dirname(__FILE__)) . "/app/Models");
 define("VIEWS_PATH", dirname(dirname(__FILE__)) . "/app/Views");
 
 spl_autoload_register(function ($class) {
-  require ROOT_PATH . "/" . str_replace('\\', "/", $class) . ".php";
+	require ROOT_PATH . "/" . str_replace('\\', "/", $class) . ".php";
 });
 
 /**
@@ -15,9 +15,9 @@ spl_autoload_register(function ($class) {
  */
 $GLOBALS["globalEnvironmentValues"] = [];
 $fhandler = fopen(ROOT_PATH . "/.env", 'r') or die("Missing .env file");
-while(!feof($fhandler)) {
-  [$key, $value] = explode("=", fgets($fhandler));
-  $globalEnvironmentValues[trim($key)] = str_replace("\"", "", trim($value));
+while (!feof($fhandler)) {
+	[$key, $value] = explode("=", fgets($fhandler));
+	$globalEnvironmentValues[trim($key)] = str_replace("\"", "", trim($value));
 }
 fclose($fhandler);
 unset($fhandler);

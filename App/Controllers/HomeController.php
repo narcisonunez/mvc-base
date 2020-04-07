@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Controllers;
 
-class HomeController extends Controller {
+class HomeController extends Controller
+{
 
-  public function index()
-  {
-    return $this->view('welcome');
-  }
+	public function index()
+	{
+		return $this->view('welcome');
+	}
 }

@@ -1,66 +1,68 @@
 <?php
+
 namespace Core;
 
-class HttpHandler {
+class HttpHandler
+{
 
-  /**
-   * Resolve the current request and execute the corresponding actions
-   * 
-   * @param Core\Request $request
-   */
-  public function execute(Request $request)
-  {
-    $params = $request->routeParams;
-    $routeHandler = $request->routeHandler;
+	/**
+	 * Resolve the current request and execute the corresponding actions
+	 * 
+	 * @param Core\Request $request
+	 */
+	public function execute(Request $request)
+	{
+		$params = $request->routeParams;
+		$routeHandler = $request->routeHandler;
 
-    $controller = "App\\Controllers\\" . $routeHandler['controller'];
+		$controller = "App\\Controllers\\" . $routeHandler['controller'];
 
-    if (!class_exists($controller)) {
-      echo "Controller <strong>". $routeHandler['controller'] ."</strong> doesn't exists.";
-      return;
-    }
-    
-    $controller = new $controller;
-    $controller->request($request);
-    $action = $routeHandler['action'];
-    $actionFilters = isset($routeHandler['actionFilters']) ? $routeHandler['actionFilters'] : [];
+		if (!class_exists($controller)) {
+			echo "Controller <strong>" . $routeHandler['controller'] . "</strong> doesn't exists.";
+			return;
+		}
 
-    if (method_exists($controller, $action)) {
-      if (isset($actionFilters["before"])) {
-        $this->applyFilters($controller, $actionFilters["before"], $params);
-      }
-      
-      $viewHTML = $controller->{$action}(...$params);
-      
-      if (isset($actionFilters["after"])) {
-        $this->applyFilters($controller, $actionFilters["after"], $params);
-      }
+		$controller = new $controller;
+		$controller->request($request);
+		$action = $routeHandler['action'];
+		$actionFilters = isset($routeHandler['actionFilters']) ? $routeHandler['actionFilters'] : [];
 
-      return $viewHTML;
-    }
+		if (method_exists($controller, $action)) {
+			if (isset($actionFilters["before"])) {
+				$this->applyFilters($controller, $actionFilters["before"], $params);
+			}
 
-    echo "Action <strong>$action</strong> doesn't exists.";
-    return;
-  }
+			$viewHTML = $controller->{$action}(...$params);
 
-  /**
-   * Execute the action filters in an specific controller
-   * 
-   * @param App\Controllers\Controller $controller
-   * @param array $filters
-   * @param array $params
-   */
-  private function applyFilters($controller, $filters, $params)
-  {
-    foreach($filters as $filterName) {
-      try { 
-        $reflector = new \ReflectionObject($controller);
-        $filterName = $reflector->getMethod($filterName);
-        $filterName->setAccessible(true);
-        $filterName->invokeArgs($controller, $params);
-      } catch(\Exception $e) {
-        throw new \Exception("Action filter: " . $filterName . " is not implemented.");
-      }
-    }
-  }
+			if (isset($actionFilters["after"])) {
+				$this->applyFilters($controller, $actionFilters["after"], $params);
+			}
+
+			return $viewHTML;
+		}
+
+		echo "Action <strong>$action</strong> doesn't exists.";
+		return;
+	}
+
+	/**
+	 * Execute the action filters in an specific controller
+	 * 
+	 * @param App\Controllers\Controller $controller
+	 * @param array $filters
+	 * @param array $params
+	 */
+	private function applyFilters($controller, $filters, $params)
+	{
+		foreach ($filters as $filterName) {
+			try {
+				$reflector = new \ReflectionObject($controller);
+				$filterName = $reflector->getMethod($filterName);
+				$filterName->setAccessible(true);
+				$filterName->invokeArgs($controller, $params);
+			} catch (\Exception $e) {
+				throw new \Exception("Action filter: " . $filterName . " is not implemented.");
+			}
+		}
+	}
 }
