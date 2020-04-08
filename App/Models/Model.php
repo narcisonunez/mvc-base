@@ -10,13 +10,11 @@ abstract class Model
 
 	public function __construct()
 	{
-		$db = new Database(
+		$this->db = Database::getInstance(
 			env_value("DB_HOST"),
 			env_value("DB_NAME"),
 			env_value("DB_USER"),
 			env_value("DB_PASSWORD")
 		);
-
-		$this->db = $db->getInstance();
 	}
 }
