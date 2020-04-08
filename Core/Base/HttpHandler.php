@@ -4,6 +4,7 @@ namespace Core\Base;
 
 use App\Middlewares\Middleware;
 use Core\Base\Request;
+use Core\Middlewares\MiddlewareContract;
 
 class HttpHandler
 {
@@ -75,9 +76,17 @@ class HttpHandler
 	private function applyGlobalMiddlewares(Request $request)
 	{
 		foreach (Middleware::$globals as $middleware) {
-			$request = (new $middleware())->execute($request);
+			$instance = new $middleware();
+
+			if (!$instance instanceof MiddlewareContract) {
+				echo $middleware . " must implement Core\\Middlewares\\MiddlewareContract";
+				die();
+			}
+
+			$request = $instance->execute($request);
+
 			if (!$request) {
-				dd($middleware . " Failed");
+				dd($middleware . " Failed"); // TODO: redirect to the back page
 			}
 		}
 
