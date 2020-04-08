@@ -1,6 +1,9 @@
 <?php
 
-namespace Core;
+namespace Core\Base;
+
+use App\Middlewares\Middleware;
+use Core\Base\Request;
 
 class HttpHandler
 {
@@ -8,7 +11,7 @@ class HttpHandler
 	/**
 	 * Resolve the current request and execute the corresponding actions
 	 * 
-	 * @param Core\Request $request
+	 * @param Core\Base\Request $request
 	 */
 	public function execute(Request $request)
 	{
@@ -22,8 +25,11 @@ class HttpHandler
 			return;
 		}
 
+		$request = $this->applyGlobalMiddlewares($request);
+
 		$controller = new $controller;
 		$controller->request($request);
+
 		$action = $routeHandler['action'];
 		$actionFilters = isset($routeHandler['actionFilters']) ? $routeHandler['actionFilters'] : [];
 
@@ -64,5 +70,17 @@ class HttpHandler
 				throw new \Exception("Action filter: " . $filterName . " is not implemented.");
 			}
 		}
+	}
+
+	private function applyGlobalMiddlewares(Request $request)
+	{
+		foreach (Middleware::$globals as $middleware) {
+			$request = (new $middleware())->execute($request);
+			if (!$request) {
+				dd($middleware . " Failed");
+			}
+		}
+
+		return $request;
 	}
 }

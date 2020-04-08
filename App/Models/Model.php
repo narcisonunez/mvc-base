@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Core\Database;
+use Core\Base\Database;
 
 abstract class Model
 {

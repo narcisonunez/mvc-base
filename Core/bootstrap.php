@@ -23,6 +23,6 @@ fclose($fhandler);
 unset($fhandler);
 
 require ROOT_PATH . '/vendor/autoload.php';
-$router = new Core\Router(new Core\HttpHandler());
+$router = new Core\Base\Router(new Core\Base\HttpHandler());
 
 require ROOT_PATH . "/resources/routes/web.php";

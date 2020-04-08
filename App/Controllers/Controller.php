@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use Core\Request;
+use Core\Base\Request;
 use App\Models\Model;
 
 class Controller
