@@ -10,10 +10,16 @@ or
 
 ### With Action Filters
 
-    $route->get("/posts", "PostsController@store")->withActionFilters([
+    $route->get("/posts", "PostsController@store")->actionFilters([
         "before" => ["methodName", "methodName"], // To be executed before the action.
         "after" => ["methodName"] // To be execute after the action
     ])
+
+Action filters receives the url parameters in the same order as specified in the route.
+
+    Route: posts/{id}/edit
+
+The methodName action filter will receive the id as the first argument. methodName(\$id)
 
 ### Available router methods
 

@@ -10,6 +10,11 @@ class Middleware
 		// Default global middlewares
 		TrimMiddleware::class,
 
-		// Add your middlewares here
+		// Add your global middlewares here
+
+	];
+
+	public static $routes = [
+		// "trim" => TrimMiddleware::class
 	];
 }

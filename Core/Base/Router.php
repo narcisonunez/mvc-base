@@ -2,6 +2,8 @@
 
 namespace Core\Base;
 
+use App\Middlewares\Middleware;
+
 class Router
 {
 
@@ -131,13 +133,32 @@ class Router
 	 * 
 	 * @param array $filters
 	 */
-	public function withActionFilters($filters)
+	public function actionFilters($filters)
 	{
-		if (!key_exists("before", $filters) || !key_exists("after", $filters)) {
-			throw new \Exception('Invalid action filters. before or after');
+		if (key_exists("before", $filters) || key_exists("after", $filters)) {
+			$this->routes[$this->lastMethod][$this->lastRoute]["actionFilters"] = $filters;
+			return $this;
 		}
+		throw new \Exception('Invalid action filters. before or after');
+	}
 
-		$this->routes[$this->lastMethod][$this->lastRoute]["actionFilters"] = $filters;
+	/**
+	 * Register middlewares for the last route
+	 * 
+	 * @param array $middlewares
+	 */
+	public function middlewares($middlewares)
+	{
+		if (!is_array($middlewares)) {
+			throw new \Exception('Middleware must be an array.');
+		}
+		foreach ($middlewares as $middleware) {
+			if (!key_exists($middleware, Middleware::$routes)) {
+				throw new \Exception('Middleware not found in the routes middleware array.');
+			}
+			$this->routes[$this->lastMethod][$this->lastRoute]["middlewares"][] = Middleware::$routes[$middleware];
+		}
+		return $this;
 	}
 
 	/**

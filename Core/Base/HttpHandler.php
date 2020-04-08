@@ -18,6 +18,9 @@ class HttpHandler
 	{
 		$params = $request->routeParams;
 		$routeHandler = $request->routeHandler;
+		$action = $routeHandler['action'];
+		$actionFilters = isset($routeHandler['actionFilters']) ? $routeHandler['actionFilters'] : [];
+		$routeMiddlewares = isset($routeHandler['middlewares']) ? $routeHandler['middlewares'] : [];
 
 		$controller = "App\\Controllers\\" . $routeHandler['controller'];
 
@@ -27,12 +30,12 @@ class HttpHandler
 		}
 
 		$request = $this->applyGlobalMiddlewares($request);
+		$request = $this->applyRouteMiddlewares($routeMiddlewares, $request);
 
 		$controller = new $controller;
 		$controller->request($request);
 
-		$action = $routeHandler['action'];
-		$actionFilters = isset($routeHandler['actionFilters']) ? $routeHandler['actionFilters'] : [];
+
 
 		if (method_exists($controller, $action)) {
 			if (isset($actionFilters["before"])) {
@@ -73,9 +76,39 @@ class HttpHandler
 		}
 	}
 
+	/**
+	 * Execute all the route middlewares
+	 * 
+	 * @param Request $request
+	 * @return Request
+	 */
+	private function applyRouteMiddlewares($middlewares, Request $request)
+	{
+		return $this->applyMiddlwares($middlewares, $request);
+	}
+
+	/**
+	 * Execute all the global middlewares
+	 * 
+	 * @param Request $request
+	 * @return Request
+	 */
 	private function applyGlobalMiddlewares(Request $request)
 	{
-		foreach (Middleware::$globals as $middleware) {
+		return $this->applyMiddlwares(Middleware::$globals, $request);
+	}
+
+	/**
+	 * Execute the middleware
+	 * 
+	 * @param array $middlewares
+	 * @param Request $request
+	 * 
+	 * @return Request
+	 */
+	private function applyMiddlwares($middlewares, $request)
+	{
+		foreach ($middlewares as $middleware) {
 			$instance = new $middleware();
 
 			if (!$instance instanceof MiddlewareContract) {
