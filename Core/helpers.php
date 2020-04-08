@@ -9,9 +9,25 @@
 function config($name, $default = null)
 {
 	$config = require APP_PATH . "/config.php";
-	if (key_exists($name, $config)) {
+
+	if (strpos($name, ".")) {
+		$name = explode(".", $name);
+	}
+
+	if (is_string($name) && key_exists($name, $config)) {
 		return $config[$name];
 	}
+
+	if (is_array($name)) {
+		$value = $config;
+		foreach ($name as $key) {
+			if (key_exists($key, $value)) {
+				$value = $value[$key];
+			}
+		}
+		return $value;
+	}
+
 	return $default;
 }
 

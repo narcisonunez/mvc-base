@@ -6,5 +6,11 @@
  */
 
 return [
-  "appName" => env_value("APP_NAME", "MVC App")
+
+	"app_name" => env_value("APP_NAME", "MVC App"),
+
+	"database" => [
+		"driver" => "mysql", // mysql | pgsql
+		"fetch_mode" => \PDO::FETCH_OBJ
+	],
 ];

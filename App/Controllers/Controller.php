@@ -3,10 +3,12 @@
 namespace App\Controllers;
 
 use Core\Request;
+use App\Models\Model;
 
 class Controller
 {
 
+	protected Model $model;
 	protected Request $request;
 
 	/**
