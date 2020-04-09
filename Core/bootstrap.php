@@ -12,8 +12,11 @@ spl_autoload_register(function ($class) {
 
 set_error_handler("Core\Base\ExceptionHandler::exceptionHandler");
 set_exception_handler("Core\Base\ExceptionHandler::exceptionHandler");
+if (!file_exists(ROOT_PATH . '/logs/server.error.log')) {
+	mkdir(ROOT_PATH . '/logs');
+}
 ini_set('error_log', ROOT_PATH . '/logs/server.error.log');
-error_log("Testing");
+
 /**
  * Register all the keys in the .env file as global to be accesible
  */
