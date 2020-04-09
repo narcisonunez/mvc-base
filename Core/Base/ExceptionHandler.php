@@ -4,17 +4,45 @@ namespace Core\Base;
 
 class ExceptionHandler
 {
-	public function errorHandler($errNo, $errStr, $errFile, $errLine)
+	/**
+	 * Global error handler
+	 * 
+	 * @param int $code
+	 * @param string $description
+	 * @param string $file
+	 * @param string $line 
+	 */
+	public static function errorHandler($code, $description, $file, $line)
 	{
-		dd($errNo, $errStr, $errFile, $errLine);
+		http_response_code(500);
+
+		$message = "Error: $code\n\n";
+		$message .= "Message: $description\n\n";
+		$message .= "File: $file\n\n";
+		$message .= "Line: $line";
+
+		if (env_value("ENVIRONMENT") != "local") {
+			return view("errors.500");
+		}
+
+		dd($message);
 	}
 
+	/**
+	 * Global exception handler
+	 * @param $exception
+	 */
 	public static function exceptionHandler($exception)
 	{
 		$code = $exception->getCode();
 
 		if ($code == 500 || $code == 404) {
-			return view("errors.$code");
+			http_response_code($code);
+			if (env_value("ENVIRONMENT") != "local") {
+				return view("errors.$code");
+			}
+			dd($exception);
+			return;
 		}
 	}
 }

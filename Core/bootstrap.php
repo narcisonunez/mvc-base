@@ -10,7 +10,7 @@ spl_autoload_register(function ($class) {
 	require ROOT_PATH . "/" . str_replace('\\', "/", $class) . ".php";
 });
 
-set_error_handler("Core\Base\ExceptionHandler::exceptionHandler");
+set_error_handler("Core\Base\ExceptionHandler::errorHandler");
 set_exception_handler("Core\Base\ExceptionHandler::exceptionHandler");
 if (!file_exists(ROOT_PATH . '/logs/server.error.log')) {
 	mkdir(ROOT_PATH . '/logs');

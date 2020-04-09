@@ -88,6 +88,7 @@ function redirect($path)
  */
 function dd(...$data)
 {
+	echo "<pre>";
 	if (is_array($data[0])) {
 		$data = $data[0];
 	}
@@ -99,7 +100,7 @@ function dd(...$data)
 		var_dump($info);
 		echo "\n\n";
 	}
-
+	echo "</pre>";
 	die();
 }
 
@@ -112,4 +113,15 @@ function dd(...$data)
 function form_method($method)
 {
 	echo '<input type="hidden" name="_method" value="' . $method . '">';
+}
+
+/**
+ * Load 404 error view
+ * 
+ * @param string $name
+ */
+function view_404()
+{
+	http_response_code(404);
+	return view("errors.404");
 }

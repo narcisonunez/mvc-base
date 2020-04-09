@@ -4,8 +4,8 @@ namespace App\Controllers;
 
 class HomeController extends Controller
 {
-	private function index()
+	public function index()
 	{
-		return $this->view('welcome');
+		return view('welcome');
 	}
 }
