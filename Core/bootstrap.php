@@ -23,8 +23,12 @@ ini_set('error_log', ROOT_PATH . '/logs/server.error.log');
 $GLOBALS["globalEnvironmentValues"] = [];
 $fhandler = fopen(ROOT_PATH . "/.env", 'r') or die("Missing .env file");
 while (!feof($fhandler)) {
-	[$key, $value] = explode("=", fgets($fhandler));
-	$globalEnvironmentValues[trim($key)] = str_replace("\"", "", trim($value));
+	$configuration = fgets($fhandler);
+	$configuration = explode("=", $configuration);
+	if (strlen($configuration[0]) == 1) {
+		continue;
+	}
+	$globalEnvironmentValues[trim($configuration[0])] = str_replace("\"", "", trim($configuration[1]));
 }
 fclose($fhandler);
 unset($fhandler);
