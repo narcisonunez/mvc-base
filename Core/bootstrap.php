@@ -10,6 +10,10 @@ spl_autoload_register(function ($class) {
 	require ROOT_PATH . "/" . str_replace('\\', "/", $class) . ".php";
 });
 
+set_error_handler("Core\Base\ExceptionHandler::exceptionHandler");
+set_exception_handler("Core\Base\ExceptionHandler::exceptionHandler");
+ini_set('error_log', ROOT_PATH . '/logs/server.error.log');
+error_log("Testing");
 /**
  * Register all the keys in the .env file as global to be accesible
  */

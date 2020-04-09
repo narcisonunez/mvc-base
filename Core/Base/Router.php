@@ -36,7 +36,7 @@ class Router
 		if ($request = $this->match($route, $method)) {
 			return $this->httpHandler->execute($request);
 		}
-		return require VIEWS_PATH . "/errors/404.php";
+		throw new \Exception("Page not found.", 404);
 	}
 
 	/**
@@ -141,7 +141,7 @@ class Router
 			$this->routes[$this->lastMethod][$this->lastRoute]["actionFilters"] = $filters;
 			return $this;
 		}
-		throw new \Exception('Invalid action filters. before or after');
+		throw new \Exception('Invalid action filters. before or after', 500);
 	}
 
 	/**
@@ -152,11 +152,11 @@ class Router
 	public function middlewares($middlewares)
 	{
 		if (!is_array($middlewares)) {
-			throw new \Exception('Middleware must be an array.');
+			throw new \Exception('Middleware must be an array.', 500);
 		}
 		foreach ($middlewares as $middleware) {
 			if (!key_exists($middleware, Middleware::$routes)) {
-				throw new \Exception('Middleware not found in the routes middleware array.');
+				throw new \Exception('Middleware not found in the routes middleware array.', 500);
 			}
 			$this->routes[$this->lastMethod][$this->lastRoute]["middlewares"][] = Middleware::$routes[$middleware];
 		}

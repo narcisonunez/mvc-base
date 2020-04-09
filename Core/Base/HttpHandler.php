@@ -24,7 +24,7 @@ class HttpHandler
 		$controller = "App\\Controllers\\" . $routeHandler['controller'];
 
 		if (!class_exists($controller)) {
-			echo "Controller <strong>" . $routeHandler['controller'] . "</strong> doesn't exists.";
+			throw new \Exception("Controller $controller doesn't exists.", 500);
 			return;
 		}
 
@@ -39,7 +39,12 @@ class HttpHandler
 				$this->applyFilters($controller, $actionFilters["before"], $params);
 			}
 
-			$viewHTML = $controller->{$action}(...$params);
+			try {
+				$viewHTML = $controller->{$action}(...$params);
+			} catch (\Exception | \Error $e) {
+				$name = get_class($controller);
+				throw new \Exception("Unable to call $action action in $name controller. Method needs to be public", 500, $e);
+			}
 
 			if (isset($actionFilters["after"])) {
 				$this->applyFilters($controller, $actionFilters["after"], $params);
@@ -48,8 +53,7 @@ class HttpHandler
 			return $viewHTML;
 		}
 
-		echo "Action <strong>$action</strong> doesn't exists.";
-		return;
+		throw new \Exception("Action $action doesn't exists.", 500);
 	}
 
 	/**

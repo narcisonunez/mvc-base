@@ -1,8 +1,4 @@
 <?php
 // Register all your routes using the $router instance
 
-$router->get('', 'HomeController@index')
-	->middlewares(['trim'])
-	->actionFilters([
-		"before" => ['validateOwner']
-	]);
+$router->get('', 'HomeController@index');
