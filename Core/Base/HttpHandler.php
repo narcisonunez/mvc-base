@@ -8,7 +8,6 @@ use Core\Middlewares\MiddlewareContract;
 
 class HttpHandler
 {
-
 	/**
 	 * Resolve the current request and execute the corresponding actions
 	 * 
@@ -34,8 +33,6 @@ class HttpHandler
 
 		$controller = new $controller;
 		$controller->request($request);
-
-
 
 		if (method_exists($controller, $action)) {
 			if (isset($actionFilters["before"])) {

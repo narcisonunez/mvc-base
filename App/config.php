@@ -9,6 +9,10 @@ return [
 
 	"app_name" => env_value("APP_NAME", "MVC App"),
 
+	/**
+	 * Configurations related to the database connection
+	 * The supported drivers are listed in the PDO documentation
+	 */
 	"database" => [
 		"driver" => "mysql", // mysql | pgsql
 		"fetch_mode" => \PDO::FETCH_OBJ

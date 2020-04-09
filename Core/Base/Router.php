@@ -6,7 +6,9 @@ use App\Middlewares\Middleware;
 
 class Router
 {
-
+	/**
+	 * Supported HTTP methods
+	 */
 	private $routes = [
 		"GET" => [],
 		"POST" => [],

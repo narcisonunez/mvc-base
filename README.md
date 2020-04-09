@@ -8,20 +8,7 @@ or
 
     $router->get("/posts", ["controller" => "PostsController", "action" => "store"]);
 
-### With Action Filters
-
-    $route->get("/posts", "PostsController@store")->actionFilters([
-        "before" => ["methodName", "methodName"], // To be executed before the action.
-        "after" => ["methodName"] // To be execute after the action
-    ])
-
-Action filters receives the url parameters in the same order as specified in the route.
-
-    Route: posts/{id}/edit
-
-The methodName action filter will receive the id as the first argument. methodName(\$id)
-
-### Available router methods
+## Available router methods
 
     $router->get("route", "Controller@action")
     $router->post("route", "Controller@action")
@@ -35,6 +22,37 @@ To be able to use patch and delete you will need to have a hidden input named \_
 or use a helper function
 
     form_method("PATCH");
+
+## Action Filters
+
+    $route->get("/posts", "PostsController@store")->actionFilters([
+        "before" => ["methodName", "methodName"], // To be executed before the action.
+        "after" => ["methodName"] // To be execute after the action
+    ])
+
+Action filters receives the url parameters in the same order as specified in the route.
+
+    Route: posts/{id}/edit
+
+The methodName action filter will receive the id as the first argument. methodName(\$id)
+
+## Middlewares
+
+### Global Middlewares
+
+They will be executed for every request and need to be registered in the \$globals array inside App/Middlewares/Middleware class.
+
+### Routes middleware
+
+They can be assigned using the router to an specific route using the middlewares method and need to be registered in the \$routes array inside App/Middlewares/Middleware class.
+
+    $routes = [
+        "alias" => MyOwnMiddleware::class
+    ]
+
+Using the router to assign a middleware looks like this
+
+    $router->get("path", "Controller@action")->middlewares(["alias"])
 
 ### Helper functions
 
