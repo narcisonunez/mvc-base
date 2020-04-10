@@ -10,12 +10,9 @@ class TwigFunctionsExtension extends AbstractExtension
 	public function getFunctions()
 	{
 		return [
-			new TwigFunction('config', [$this, 'config']),
+			new TwigFunction('config', 'config'),
+			new TwigFunction('form_method', 'form_method'),
+			new TwigFunction('form_csrf', 'form_csrf'),
 		];
-	}
-
-	public function config($name, $default = null)
-	{
-		return config($name, $default);
 	}
 }

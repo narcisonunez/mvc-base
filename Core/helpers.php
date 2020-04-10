@@ -45,9 +45,9 @@ function view($name, $data = [])
 	$name .= ($twig != null) ? ".html" : ".php";
 	$view = VIEWS_PATH . "/$name";
 
-	// if (!$twig && !file_exists($view)) {
-	// 	throw new \Exception("View doesn't exists.", 500);
-	// }
+	if (!$twig && !file_exists($view)) {
+		throw new \Exception("View doesn't exists.", 500);
+	}
 
 	if ($twig) {
 		$template = $twig->load($name);

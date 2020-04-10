@@ -16,10 +16,12 @@ class ExceptionHandler
 	{
 		http_response_code(500);
 
-		$message = "Error: $code\n\n";
+		$message = "\n\nError: $code\n\n";
 		$message .= "Message: $description\n\n";
 		$message .= "File: $file\n\n";
 		$message .= "Line: $line";
+
+		error_log($message);
 
 		if (env_value("ENVIRONMENT") != "local") {
 			return view("errors.500");
@@ -35,6 +37,14 @@ class ExceptionHandler
 	public static function exceptionHandler($exception)
 	{
 		$code = $exception->getCode();
+
+		$message = "\n\nCode:  $code";
+		$message .= "\nMessage: " . $exception->getMessage();
+		$message .= "\nFile: " . $exception->getFile();
+		$message .= "\nLine: " . $exception->getLine();
+		$message .= "\nStack Trace: " . $exception->getTraceAsString();
+
+		error_log($message);
 
 		switch ($code) {
 			case 403:

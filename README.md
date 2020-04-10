@@ -1,3 +1,17 @@
+# Views
+
+Out of the box the default view engine is **twig** in the configuration file. You can also set the value to **none** to use regular php files.
+
+The main difference between those values is that **twig** requires **.html** file extension and when set to **none** you must use **.php** extension.
+
+You can access the following functions inside a twig file:
+
+    form_method
+    form_csrf
+    config
+
+For more information see the [Helper Functions section](###helper-functions)
+
 # Routes
 
 Register all yours routes in the resources/routes/web.php
@@ -15,13 +29,17 @@ or
     $router->patch("route", "Controller@action")
     $router->delete("route", "Controller@action")
 
-To be able to use patch and delete you will need to have a hidden input named \_method with value of PATCH or DELETE.
+For **post, patch and delete** methods is required to have a **csrf** input in the form.
+
+    form_csrf() : Use this function to echo out the field
+
+To be able to use **patch** and **delete** you will need to have a hidden input named **\_method** with value of **PATCH** or **DELETE**.
 
     <input type="hidden" name="_method" value="PATCH">
 
 or use a helper function
 
-    form_method("PATCH");
+    form_method("PATCH|DELETE");
 
 ## Action Filters
 
@@ -38,11 +56,11 @@ The methodName action filter will receive the id as the first argument. methodNa
 
 ## Middlewares
 
-### Global Middlewares
+### **Global Middlewares**
 
 They will be executed for every request and need to be registered in the \$globals array inside App/Middlewares/Middleware class.
 
-### Routes middleware
+### **Routes middleware**
 
 They can be assigned using the router to an specific route using the middlewares method and need to be registered in the \$routes array inside App/Middlewares/Middleware class.
 
@@ -56,21 +74,21 @@ Using the router to assign a middleware looks like this
 
 ### Helper functions
 
-    . config("key", "default") : Get values from the app/config.php file
+    * config("key", "default") : Get values from the app/config.php file
 
-    . view("name", [DATA]) : Load a view passing all the data array as variables
+    * view("name", [DATA]) : Load a view passing all the data array as variables
 
-    . view_404() : Load the 404 view
+    * view_404() : Load the 404 view
 
-    . env_value("key", "default") : Get values from .env file
+    * env_value("key", "default") : Get values from .env file
 
-    . redirect("path") : Redirect to an specific path
+    * redirect("path") : Redirect to an specific path
 
-    . dd($var, $var2, ...) : Dump and die.
+    * dd($var, $var2, ...) : Dump and die.
 
-    . form_method("PATCH") : echo out a hidden input with the method
+    * form_method("PATCH") : echo out a hidden input with the method
 
-    . form_csrf() : echo out a hidden input with a secure csrf token
+    * form_csrf() : echo out a hidden input with a secure csrf token
 
 ## Server Configuration
 
