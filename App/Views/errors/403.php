@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title><?php echo config("app_name"); ?></title>
+    <title>404</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -44,6 +44,16 @@
             font-size: 100px;
         }
 
+        .links>a {
+            color: #636b6f;
+            padding: 0 25px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: .1rem;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
         .m-b-md {
             margin-bottom: 30px;
         }
@@ -54,14 +64,12 @@
     <div class="flex-center position-ref full-height">
         <div class="content">
             <div class="title m-b-md">
-                Welcome
+                Forbidden
             </div>
-            <form action="posts" method="POST">
-                <?php
-                form_method("PATCH");
-                ?>
-                <button type="submit">Send</button>
-            </form>
+
+            <div class="links">
+                <a href="/">Back to safety</a>
+            </div>
         </div>
     </div>
 </body>

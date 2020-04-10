@@ -2,6 +2,7 @@
 
 namespace App\Middlewares;
 
+use Core\Middlewares\VerifyCsrfToken;
 use Core\Middlewares\TrimMiddleware;
 
 class Middleware
@@ -12,6 +13,7 @@ class Middleware
 	 */
 	public static $globals = [
 		// Default global middlewares
+		VerifyCsrfToken::class,
 		TrimMiddleware::class,
 
 		// Add your global middlewares here

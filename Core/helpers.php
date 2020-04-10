@@ -116,6 +116,18 @@ function form_method($method)
 }
 
 /**
+ * echo out the _csrf_token hidden input field used in form 
+ * to validate the request with the one in sesion
+ *
+ */
+function form_csrf()
+{
+	$token = bin2hex(random_bytes(25));
+	$_SESSION['_session_id'] = $token;
+	echo '<input type="hidden" name="_csrf_token" value="' . $token . '">';
+}
+
+/**
  * Load 404 error view
  * 
  * @param string $name

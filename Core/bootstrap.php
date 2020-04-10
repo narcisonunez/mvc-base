@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 define("ROOT_PATH", dirname(dirname(__FILE__)));
 define("APP_PATH", dirname(dirname(__FILE__)) . "/app");
 define("CORE_PATH", dirname(dirname(__FILE__)) . "/core");

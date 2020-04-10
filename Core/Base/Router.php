@@ -34,6 +34,7 @@ class Router
 	public function resolve($route, $method)
 	{
 		if ($request = $this->match($route, $method)) {
+			$request->method($method);
 			return $this->httpHandler->execute($request);
 		}
 		throw new \Exception("Page not found.", 404);

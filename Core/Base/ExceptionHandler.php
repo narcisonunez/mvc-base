@@ -36,13 +36,17 @@ class ExceptionHandler
 	{
 		$code = $exception->getCode();
 
-		if ($code == 500 || $code == 404) {
-			http_response_code($code);
-			if (env_value("ENVIRONMENT") != "local") {
-				return view("errors.$code");
-			}
-			dd($exception);
-			return;
+		switch ($code) {
+			case 403:
+			case 404:
+			case 500: {
+					http_response_code($code);
+					if (env_value("ENVIRONMENT") != "local") {
+						return view("errors.$code");
+					}
+					dd($exception);
+					return;
+				}
 		}
 	}
 }

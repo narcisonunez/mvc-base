@@ -51,8 +51,12 @@ class Request
 	 * 
 	 * @return string
 	 */
-	public function method()
+	public function method($method = null)
 	{
+		if ($method) {
+			$_SERVER['REQUEST_METHOD'] = $method;
+		}
+
 		return $_SERVER['REQUEST_METHOD'];
 	}
 
