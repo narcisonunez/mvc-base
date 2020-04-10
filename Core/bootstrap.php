@@ -47,6 +47,5 @@ if (config('template_engine') == "twig") {
 	$GLOBALS["twig"] = $twig;
 }
 
-
 $router = new Core\Base\Router(new Core\Base\HttpHandler());
-require ROOT_PATH . "/resources/routes/web.php";
+require APP_PATH . "/routes.php";
