@@ -74,6 +74,10 @@ Using the router to assign a middleware looks like this
 
 ## Server Configuration
 
+### Local Development
+
+    php -S localhost:3000 public/index.php
+
 ### Apache .htaccess configS
 
     RewriteEngine on
