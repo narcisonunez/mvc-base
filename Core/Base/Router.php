@@ -127,7 +127,7 @@ class Router
 		$regex = $this->parseRouteRegex($route);
 		$this->routes[$method][$regex] = $this->getRouteHandler($routeHandler);
 
-		$this->lastRoute = $route;
+		$this->lastRoute = $regex;
 		$this->lastMethod = $method;
 	}
 

@@ -7,7 +7,7 @@ use App\Models\Model;
 
 class Controller
 {
-	protected Model $model;
+	protected $model;
 	protected Request $request;
 
 	/**

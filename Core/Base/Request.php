@@ -70,7 +70,7 @@ class Request
 	 */
 	public function get($key, $default = null)
 	{
-		return $this->getValues($_GET, $key, $default);
+		return $this->getValues($this->get, $key, $default);
 	}
 
 	/**
@@ -83,7 +83,7 @@ class Request
 	 */
 	public function post($key, $default = null)
 	{
-		return $this->getValues($_POST, $key, $default);
+		return $this->getValues($this->post, $key, $default);
 	}
 
 	/**

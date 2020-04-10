@@ -15,9 +15,7 @@ class Middleware
 		// Default global middlewares
 		VerifyCsrfToken::class,
 		TrimMiddleware::class,
-
 		// Add your global middlewares here
-
 	];
 
 	/**
@@ -25,6 +23,6 @@ class Middleware
 	 * @var array
 	 */
 	public static $routes = [
-		// "alias" => MyOwnMiddleware::class
+		// "trim" => TrimMiddleware::class,
 	];
 }

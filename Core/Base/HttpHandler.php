@@ -35,18 +35,18 @@ class HttpHandler
 		$controller->request($request);
 
 		if (method_exists($controller, $action)) {
-			if (isset($actionFilters["before"])) {
-				$this->applyFilters($controller, $actionFilters["before"], $params);
-			}
-
 			try {
+				if (isset($actionFilters["before"])) {
+					$this->applyFilters($controller, $actionFilters["before"], $params);
+				}
+
 				$viewHTML = $controller->{$action}(...$params);
+
+				if (isset($actionFilters["after"])) {
+					$this->applyFilters($controller, $actionFilters["after"], $params);
+				}
 			} catch (\Exception | \Error $e) {
 				throw new \Exception($e->getMessage(), 500);
-			}
-
-			if (isset($actionFilters["after"])) {
-				$this->applyFilters($controller, $actionFilters["after"], $params);
 			}
 
 			return $viewHTML;
