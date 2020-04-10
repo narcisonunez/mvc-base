@@ -42,8 +42,7 @@ class HttpHandler
 			try {
 				$viewHTML = $controller->{$action}(...$params);
 			} catch (\Exception | \Error $e) {
-				$name = get_class($controller);
-				throw new \Exception("Unable to call $action action in $name controller. Method needs to be public", 500, $e);
+				throw new \Exception($e->getMessage(), 500);
 			}
 
 			if (isset($actionFilters["after"])) {

@@ -36,6 +36,17 @@ fclose($fhandler);
 unset($fhandler);
 
 require ROOT_PATH . '/vendor/autoload.php';
-$router = new Core\Base\Router(new Core\Base\HttpHandler());
 
+/**
+ * Configure Twig Engine
+ */
+if (config('template_engine') == "twig") {
+	$loader = new \Twig\Loader\FilesystemLoader(VIEWS_PATH);
+	$twig = new \Twig\Environment($loader);
+	$twig->addExtension(new Core\Base\TwigFunctionsExtension());
+	$GLOBALS["twig"] = $twig;
+}
+
+
+$router = new Core\Base\Router(new Core\Base\HttpHandler());
 require ROOT_PATH . "/resources/routes/web.php";

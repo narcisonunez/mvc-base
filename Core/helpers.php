@@ -39,11 +39,19 @@ function config($name, $default = null)
  */
 function view($name, $data = [])
 {
-	$name = str_replace(".", "/", $name);
-	$view = VIEWS_PATH . "/$name.php";
+	global $twig;
 
-	if (!file_exists($view)) {
-		echo 'View doesn\'t exists.';
+	$name = str_replace(".", "/", $name);
+	$name .= ($twig != null) ? ".html" : ".php";
+	$view = VIEWS_PATH . "/$name";
+
+	// if (!$twig && !file_exists($view)) {
+	// 	throw new \Exception("View doesn't exists.", 500);
+	// }
+
+	if ($twig) {
+		$template = $twig->load($name);
+		echo $template->render($data);
 		return;
 	}
 

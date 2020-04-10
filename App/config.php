@@ -9,6 +9,8 @@ return [
 
 	"app_name" => env_value("APP_NAME", "MVC App"),
 
+	"template_engine" => "twig", // none | twig
+
 	/**
 	 * Configurations related to the database connection
 	 * The supported drivers are listed in the PDO documentation
