@@ -130,7 +130,6 @@ function form_csrf()
 /**
  * Load 404 error view
  * 
- * @param string $name
  */
 function view_404()
 {

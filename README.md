@@ -60,12 +60,17 @@ Using the router to assign a middleware looks like this
 
     . view("name", [DATA]) : Load a view passing all the data array as variables
 
+    . view_404() : Load the 404 view
+
     . env_value("key", "default") : Get values from .env file
 
     . redirect("path") : Redirect to an specific path
-    dd($var, $var2, ...) : Dump and die.
+
+    . dd($var, $var2, ...) : Dump and die.
 
     . form_method("PATCH") : echo out a hidden input with the method
+
+    . form_csrf() : echo out a hidden input with a secure csrf token
 
 ## Server Configuration
 
