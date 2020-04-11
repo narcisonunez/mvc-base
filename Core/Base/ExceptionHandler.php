@@ -54,8 +54,12 @@ class ExceptionHandler
 					if (env_value("ENVIRONMENT") != "local") {
 						return view("errors.$code");
 					}
+				}
+			default: {
+					if (env_value("ENVIRONMENT") != "local") {
+						return view("errors.500");
+					}
 					dd($exception);
-					return;
 				}
 		}
 	}

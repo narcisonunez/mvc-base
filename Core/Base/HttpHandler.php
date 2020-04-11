@@ -71,7 +71,7 @@ class HttpHandler
 				$filterName->setAccessible(true);
 				$filterName->invokeArgs($controller, $params);
 			} catch (\Exception $e) {
-				throw new \Exception("Action filter: " . $filterName . " is not implemented.");
+				throw new \Exception("Action filter: " . $filterName . " is not implemented.", 500, $e);
 			}
 		}
 	}
@@ -119,7 +119,7 @@ class HttpHandler
 			$request = $instance->execute($request);
 
 			if (!$request) {
-				dd($middleware . " Failed"); // TODO: redirect to the back page
+				redirect("/");
 			}
 		}
 
