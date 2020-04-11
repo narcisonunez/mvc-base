@@ -16,7 +16,7 @@ class Database
 				$conn->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, $fetchMode);
 				static::$conn = $conn;
 			} catch (\PDOException $e) {
-				dd($e->getMessage());
+				throw new \Exception($e->getMessage(), 500, $e);
 			}
 		}
 		return static::$conn;
