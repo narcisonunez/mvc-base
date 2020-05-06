@@ -4,7 +4,7 @@ namespace Core\Base;
 
 class Database
 {
-	static private ?\PDO $conn = null;
+	static private $conn = null;
 
 	public static function getInstance($host, $dbName, $user, $pass)
 	{

@@ -6,7 +6,7 @@ use Core\Base\Database;
 
 abstract class Model
 {
-	protected \PDO $db;
+	protected $db;
 
 	public function __construct()
 	{
