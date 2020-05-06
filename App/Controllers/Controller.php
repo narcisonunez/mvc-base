@@ -8,7 +8,7 @@ use App\Models\Model;
 class Controller
 {
 	protected $model;
-	protected Request $request;
+	protected $request;
 
 	/**
 	 * Set or returns the current request
